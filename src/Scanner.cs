@@ -42,6 +42,12 @@ public class Scanner
             case ')':
                 addToken(TokenType.RIGHT_PAREN);
                 break;
+            case '{':
+                addToken(TokenType.LEFT_BRACE);
+                break;
+            case '}':
+                addToken(TokenType.RIGHT_BRACE);
+                break;
         }
     }
 
