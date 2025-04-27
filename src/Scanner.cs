@@ -7,6 +7,7 @@ public class Scanner
     private int start = 0;
     private int current = 0;
     private int line = 1;
+    private bool hasError = false;
 
     public Scanner(string source)
     {
@@ -69,6 +70,10 @@ public class Scanner
             case '*':
                 addToken(TokenType.STAR);
                 break;
+            default:
+                Console.Error.WriteLine("[line " + line +"]" + " Error: Unexpected character: " + c);
+                hasError = true;
+                break;
         }
     }
 
@@ -86,5 +91,10 @@ public class Scanner
     {
         string text = source.Substring(start, current-start);
         tokens.Add(new Token(type, text, literal, line));
+    }
+
+    public bool HasError()
+    {
+        return hasError;
     }
 }
