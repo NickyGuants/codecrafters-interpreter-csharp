@@ -65,7 +65,14 @@ public class Scanner
                 addToken(TokenType.SEMICOLON);
                 break;
             case '/':
-                addToken(TokenType.SLASH);
+                if (source.Length > current && peekNextChar() == '/')
+                {
+                    current = source.Length;
+                }
+                else
+                {
+                    addToken(TokenType.SLASH);
+                }
                 break;
             case '*':
                 addToken(TokenType.STAR);
