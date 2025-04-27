@@ -82,6 +82,17 @@ public class Scanner
                     addToken(TokenType.EQUAL);
                 }
                 break;
+            case '!':
+                if (source.Length > current && peekNextChar() == '=')
+                {
+                    advance();
+                    addToken(TokenType.BANG_EQUAL);
+                }
+                else
+                {
+                    addToken(TokenType.BANG);
+                }
+                break;
             default:
                 Console.Error.WriteLine("[line " + line +"]" + " Error: Unexpected character: " + c);
                 hasError = true;

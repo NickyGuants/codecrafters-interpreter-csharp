@@ -19,6 +19,8 @@ public enum TokenType
     //Operators
     EQUAL,
     EQUAL_EQUAL,
+    BANG,
+    BANG_EQUAL,
     
     EOF
 }
