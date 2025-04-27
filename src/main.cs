@@ -26,3 +26,8 @@ foreach (var token in tokens)
 {
     Console.WriteLine(token.ToString());
 }
+
+if (scanner.HasError())
+{
+    Environment.Exit(65);
+}
