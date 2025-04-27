@@ -16,7 +16,7 @@ public class Scanner
 
     public List<Token> scanTokens()
     {
-        while (!string.IsNullOrEmpty(source) && !IsAtEnd())
+        while (!string.IsNullOrWhiteSpace(source) && !IsAtEnd())
         {
             start = current;
             scanToken();
@@ -121,6 +121,13 @@ public class Scanner
                 {
                     addToken(TokenType.GREATER);
                 }
+                break;
+            case '\t':
+            case '\r':
+            case ' ':
+                break;
+            case '\n':
+                line++;
                 break;
             default:
                 Console.Error.WriteLine("[line " + line +"]" + " Error: Unexpected character: " + c);
