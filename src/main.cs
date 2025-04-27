@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using interpreter;
 
 if (args.Length < 2)
 {
@@ -18,15 +19,10 @@ if (command != "tokenize")
 
 string fileContents = File.ReadAllText(filename);
 
-// You can use print statements as follows for debugging, they'll be visible when running tests.
-Console.Error.WriteLine("Logs from your program will appear here!");
+Scanner scanner = new Scanner(fileContents);
+var tokens = scanner.scanTokens();
 
-// Uncommented this block to pass the first stage
-if (!string.IsNullOrEmpty(fileContents))
+foreach (var token in tokens)
 {
-    throw new NotImplementedException("Scanner not implemented");
-}
-else
-{
-    Console.WriteLine("EOF  null"); // Placeholder, remove this line when implementing the scanner
+    Console.WriteLine(token.ToString());
 }
