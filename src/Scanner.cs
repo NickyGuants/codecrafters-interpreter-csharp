@@ -93,6 +93,28 @@ public class Scanner
                     addToken(TokenType.BANG);
                 }
                 break;
+            case '<':
+                if (source.Length > current && peekNextChar() == '=')
+                {
+                    advance();
+                    addToken(TokenType.LESS_EQUAL);
+                }
+                else
+                {
+                    addToken(TokenType.LESS);
+                }
+                break;
+            case '>':
+                if (source.Length > current && peekNextChar() == '=')
+                {
+                    advance();
+                    addToken(TokenType.GREATER_EQUAL);
+                }
+                else
+                {
+                    addToken(TokenType.GREATER);
+                }
+                break;
             default:
                 Console.Error.WriteLine("[line " + line +"]" + " Error: Unexpected character: " + c);
                 hasError = true;
