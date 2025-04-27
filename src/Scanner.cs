@@ -70,6 +70,18 @@ public class Scanner
             case '*':
                 addToken(TokenType.STAR);
                 break;
+            case '=':
+                //check the next character
+                if (source.Length > current && peekNextChar() == '=')
+                {
+                    advance();
+                    addToken(TokenType.EQUAL_EQUAL);
+                }
+                else
+                {
+                    addToken(TokenType.EQUAL);
+                }
+                break;
             default:
                 Console.Error.WriteLine("[line " + line +"]" + " Error: Unexpected character: " + c);
                 hasError = true;
@@ -91,6 +103,11 @@ public class Scanner
     {
         string text = source.Substring(start, current-start);
         tokens.Add(new Token(type, text, literal, line));
+    }
+    
+    private char peekNextChar()
+    {
+        return source.ToCharArray()[current];
     }
 
     public bool HasError()

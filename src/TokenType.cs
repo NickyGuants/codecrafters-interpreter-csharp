@@ -15,5 +15,10 @@ public enum TokenType
     SEMICOLON,
     SLASH,
     STAR,
+    
+    //Operators
+    EQUAL,
+    EQUAL_EQUAL,
+    
     EOF
 }
