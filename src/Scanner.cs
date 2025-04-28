@@ -140,6 +140,10 @@ public class Scanner
                 {
                     handle_digit();
                 }
+                else if(IsAlpha(c))
+                {
+                    handle_identifier();
+                }
                 else
                 {
                     Console.Error.WriteLine("[line " + line +"]" + " Error: Unexpected character: " + c);
@@ -224,9 +228,28 @@ public class Scanner
         addToken(TokenType.NUMBER, value);
     }
 
+    private void handle_identifier()
+    {
+        while (IsAlphaNumeric(peekNextChar()))
+        {
+            advance();
+        }
+
+        addToken(TokenType.IDENTIFIER);
+    }
+
     private bool IsDigit(char c)
     {
         return c is >= '0' and <= '9';
+    }
+
+    private bool IsAlpha(char c)
+    {
+        return c is >= 'a' and <= 'z' || c is >= 'A' and <= 'Z' || c == '_';
+    }
+    
+    private bool IsAlphaNumeric(char c) {
+        return IsAlpha(c) || IsDigit(c);
     }
 
     public bool HasError()

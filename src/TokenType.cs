@@ -29,6 +29,7 @@ public enum TokenType
     //Literals
     STRING,
     NUMBER,
+    IDENTIFIER,
     
     EOF
 }
