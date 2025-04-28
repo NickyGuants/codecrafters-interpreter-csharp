@@ -132,6 +132,9 @@ public class Scanner
             case '\n':
                 line++;
                 break;
+            case '"':
+                handle_string();
+                break;
             default:
                 Console.Error.WriteLine("[line " + line +"]" + " Error: Unexpected character: " + c);
                 hasError = true;
@@ -158,6 +161,31 @@ public class Scanner
     private char peekNextChar()
     {
         return source.ToCharArray()[current];
+    }
+
+    private void handle_string()
+    {
+        while (!IsAtEnd() && peekNextChar() != '"')
+        {
+            if (peekNextChar() == '\n')
+            {
+                line++;
+            }
+            advance();
+        }
+        
+        if (IsAtEnd())
+        {
+            Console.Error.WriteLine("[line " + line +"]" + " Error: Unterminated string.");
+            hasError = true;
+            return;
+        }
+
+        advance();
+
+        string value = source.Substring(start+1, current-2);
+        
+        addToken(TokenType.STRING, value);
     }
 
     public bool HasError()
