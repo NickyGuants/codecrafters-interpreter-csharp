@@ -26,7 +26,9 @@ public enum TokenType
     GREATER,
     GREATER_EQUAL,
     
+    //Literals
     STRING,
+    NUMBER,
     
     EOF
 }

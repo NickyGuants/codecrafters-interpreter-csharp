@@ -136,8 +136,15 @@ public class Scanner
                 handle_string();
                 break;
             default:
-                Console.Error.WriteLine("[line " + line +"]" + " Error: Unexpected character: " + c);
-                hasError = true;
+                if (IsDigit(c))
+                {
+                    handle_digit();
+                }
+                else
+                {
+                    Console.Error.WriteLine("[line " + line +"]" + " Error: Unexpected character: " + c);
+                    hasError = true;
+                }
                 break;
         }
     }
@@ -152,7 +159,7 @@ public class Scanner
         addToken(type, null);
     }
 
-    private void addToken(TokenType type, string? literal)
+    private void addToken(TokenType type, object? literal)
     {
         string text = source.Substring(start, current-start);
         tokens.Add(new Token(type, text, literal, line));
@@ -160,7 +167,13 @@ public class Scanner
     
     private char peekNextChar()
     {
+        if (IsAtEnd()) return '\0';
         return source.ToCharArray()[current];
+    }
+    
+    private char peekNext() {
+        if (current + 1 >= source.Length) return '\0';
+        return source.ToCharArray()[current +1];
     }
 
     private void handle_string()
@@ -187,6 +200,33 @@ public class Scanner
         string value = source.Substring(startString, current-startString-1);
         
         addToken(TokenType.STRING, value);
+    }
+
+    private void handle_digit()
+    {
+        while (IsDigit(peekNextChar()) || peekNextChar() == '.')
+        {
+            advance();
+            
+            if (peekNextChar() == '.' && IsDigit(peekNext()))
+            {
+                advance();
+            }
+
+            while (IsDigit(peekNextChar()))
+            {
+                advance();
+            }
+        }
+
+        var value = Double.Parse(source.Substring(start, current-start));
+        
+        addToken(TokenType.NUMBER, value);
+    }
+
+    private bool IsDigit(char c)
+    {
+        return c is >= '0' and <= '9';
     }
 
     public bool HasError()
