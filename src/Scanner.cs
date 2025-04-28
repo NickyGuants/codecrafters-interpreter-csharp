@@ -67,7 +67,10 @@ public class Scanner
             case '/':
                 if (source.Length > current && peekNextChar() == '/')
                 {
-                    current = source.Length;
+                    while (!IsAtEnd() && peekNextChar() != '\n')
+                    {
+                        advance();
+                    }
                 }
                 else
                 {
