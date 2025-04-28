@@ -165,6 +165,7 @@ public class Scanner
 
     private void handle_string()
     {
+        var startString = current;
         while (!IsAtEnd() && peekNextChar() != '"')
         {
             if (peekNextChar() == '\n')
@@ -183,7 +184,7 @@ public class Scanner
 
         advance();
 
-        string value = source.Substring(start+1, current-2);
+        string value = source.Substring(startString, current-startString-1);
         
         addToken(TokenType.STRING, value);
     }
