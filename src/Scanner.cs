@@ -8,6 +8,26 @@ public class Scanner
     private int current = 0;
     private int line = 1;
     private bool hasError = false;
+    private static readonly Dictionary<string, TokenType> _keywords = new()
+    {
+        {"and", TokenType.AND},
+        {"class", TokenType.CLASS},
+        {"else", TokenType.ELSE},
+        {"false", TokenType.FALSE},
+        {"for", TokenType.FOR},
+        {"fun", TokenType.FUN},
+        {"if", TokenType.IF},
+        {"nil", TokenType.NIL},
+        {"or", TokenType.OR},
+        {"print", TokenType.PRINT},
+        {"return", TokenType.RETURN},
+        {"super", TokenType.SUPER},
+        {"this", TokenType.THIS},
+        {"true", TokenType.TRUE},
+        {"var", TokenType.VAR},
+        {"while", TokenType.WHILE}
+    };
+    
 
     public Scanner(string source)
     {
@@ -235,7 +255,15 @@ public class Scanner
             advance();
         }
 
-        addToken(TokenType.IDENTIFIER);
+        string text = source.Substring(start, current - start);
+        if (_keywords.TryGetValue(text, out var type))
+        {
+            addToken(type);
+        }
+        else
+        {
+            addToken(TokenType.IDENTIFIER);
+        }
     }
 
     private bool IsDigit(char c)
